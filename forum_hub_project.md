@@ -1,4 +1,4 @@
-# Forum Hub - API REST Simples (Sem Frontend)
+# Forum Hub - API REST
 
 ## Estrutura do Projeto
 
