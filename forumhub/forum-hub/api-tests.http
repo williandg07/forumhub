@@ -1,0 +1,94 @@
+### Health Check
+GET http://localhost:8080/api/health
+
+###
+### 1. Register User
+POST http://localhost:8080/api/auth/register
+Content-Type: application/json
+
+{
+  "username": "testuser",
+  "email": "test@example.com",
+  "password": "123456"
+}
+
+###
+### 2. Login
+POST http://localhost:8080/api/auth/login
+Content-Type: application/json
+
+{
+  "username": "testuser",
+  "password": "123456"
+}
+
+### Response example:
+### {
+###   "token": "eyJhbGciOiJIUzI1NiJ9...",
+###   "username": "testuser",
+###   "email": "test@example.com"
+### }
+
+###
+### 3. Create Topic (Replace YOUR_JWT_TOKEN_HERE with actual token from login)
+POST http://localhost:8080/api/topics
+Content-Type: application/json
+Authorization: Bearer YOUR_JWT_TOKEN_HERE
+
+{
+  "title": "Como usar Spring Boot com JDK 21?",
+  "message": "Estou desenvolvendo uma API REST e preciso de dicas sobre as melhores práticas com Java 21.",
+  "course": "Java"
+}
+
+###
+### 4. Get All Topics (Public endpoint)
+GET http://localhost:8080/api/topics
+
+###
+### 5. Get All Topics with pagination
+GET http://localhost:8080/api/topics?page=0&size=5&sort=creationDate,desc
+
+###
+### 6. Get Topic by ID
+GET http://localhost:8080/api/topics/1
+
+###
+### 7. Update Topic (Replace YOUR_JWT_TOKEN_HERE and update ID if needed)
+PUT http://localhost:8080/api/topics/1
+Content-Type: application/json
+Authorization: Bearer YOUR_JWT_TOKEN_HERE
+
+{
+  "title": "Como usar Spring Boot com JDK 21? - ATUALIZADO",
+  "message": "Estou desenvolvendo uma API REST e preciso de dicas sobre as melhores práticas com Java 21. Já li a documentação oficial.",
+  "course": "Java"
+}
+
+###
+### 8. Delete Topic (Replace YOUR_JWT_TOKEN_HERE and update ID if needed)
+DELETE http://localhost:8080/api/topics/1
+Authorization: Bearer YOUR_JWT_TOKEN_HERE
+
+###
+### 9. Try to create topic without authentication (should fail)
+POST http://localhost:8080/api/topics
+Content-Type: application/json
+
+{
+  "title": "Test without auth",
+  "message": "This should fail",
+  "course": "Test"
+}
+
+###
+### 10. Try to access with invalid token (should fail)
+POST http://localhost:8080/api/topics
+Content-Type: application/json
+Authorization: Bearer invalid_token_here
+
+{
+  "title": "Test with invalid token",
+  "message": "This should fail",
+  "course": "Test"
+}
